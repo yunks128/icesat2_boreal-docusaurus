@@ -1,140 +1,219 @@
----
-sidebar_position: 5
----
-
 # Development Guide
 
-This guide provides information for developers who want to contribute to HySDS or build applications using the HySDS framework.
+This guide provides comprehensive information for developers contributing to the ICESat-2 Boreal Forest Biomass Mapping project.
+
+## Table of Contents
+- [Development Guide](#development-guide)
+  - [Table of Contents](#table-of-contents)
+  - [Development Environment Setup](#development-environment-setup)
+    - [Prerequisites](#prerequisites)
+    - [Initial Setup](#initial-setup)
+    - [Docker Setup](#docker-setup)
+  - [Project Structure](#project-structure)
+  - [Development Workflow](#development-workflow)
+    - [Git Workflow](#git-workflow)
+    - [Code Review Checklist](#code-review-checklist)
+  - [Code Standards](#code-standards)
+    - [Python Style Guide](#python-style-guide)
+    - [Code Quality Tools](#code-quality-tools)
+  - [Testing](#testing)
+    - [Unit Tests](#unit-tests)
+    - [Integration Tests](#integration-tests)
+    - [Running Tests](#running-tests)
+  - [Documentation](#documentation)
+    - [Code Documentation](#code-documentation)
+    - [API Documentation](#api-documentation)
+  - [Performance Optimization](#performance-optimization)
+    - [Profiling](#profiling)
+    - [Memory Management](#memory-management)
+  - [Deployment](#deployment)
+    - [Production Build](#production-build)
+    - [Continuous Integration](#continuous-integration)
+  - [Troubleshooting](#troubleshooting)
+    - [Common Issues](#common-issues)
+    - [Debugging Tips](#debugging-tips)
+  - [Additional Resources](#additional-resources)
 
 ## Development Environment Setup
 
-### Local Development Environment
+### Prerequisites
+- Python 3.8+
+- Git
+- Docker
+- Make
+- AWS CLI
+- GDAL
 
-```bash
-# Clone the repository
-git clone https://github.com/hysds/hysds.git
-cd hysds
+### Initial Setup
 
-# Create and activate virtual environment
-python3 -m venv venv
-source venv/bin/activate
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/nasa/icesat2_boreal.git
+   cd icesat2_boreal
+   ```
 
-# Install development dependencies
-pip install -r requirements.txt
-pip install -r requirements-dev.txt
+2. **Create Virtual Environment**
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # Unix
+   # or
+   .\venv\Scripts\activate   # Windows
+   ```
 
-# Set up pre-commit hooks
-pre-commit install
-```
+3. **Install Dependencies**
+   ```bash
+   # Install development requirements
+   pip install -r requirements-dev.txt
 
-### Docker Development Environment
+   # Install pre-commit hooks
+   pre-commit install
+   ```
+
+4. **Setup Environment Variables**
+   ```bash
+   cp .env.example .env
+   # Edit .env with your credentials
+   ```
+
+### Docker Setup
 
 ```dockerfile
-# Development Dockerfile
+# Dockerfile.dev
 FROM python:3.8-slim
 
 WORKDIR /app
-COPY requirements.txt requirements-dev.txt ./
 
-RUN pip install -r requirements.txt -r requirements-dev.txt
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    gdal-bin \
+    libgdal-dev \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
 
+# Install Python dependencies
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+# Copy project files
 COPY . .
+
+CMD ["python", "src/main.py"]
 ```
 
 ## Project Structure
 
-```plaintext
-hysds/
-├── docs/                  # Documentation
-├── hysds/                # Main package
-│   ├── __init__.py
-│   ├── mozart/          # Job management
-│   ├── grq/            # Data management
-│   ├── metrics/        # System metrics
-│   └── utils/          # Shared utilities
-├── tests/               # Test suite
-├── examples/            # Example applications
-└── docker/             # Docker configurations
+```
+icesat2_boreal/
+├── src/
+│   ├── data/              # Data processing modules
+│   ├── models/            # ML models and algorithms
+│   ├── visualization/     # Visualization tools
+│   └── utils/             # Utility functions
+├── tests/
+│   ├── unit/             # Unit tests
+│   ├── integration/      # Integration tests
+│   └── fixtures/         # Test fixtures
+├── docs/                 # Documentation
+├── notebooks/           # Jupyter notebooks
+├── scripts/             # Utility scripts
+└── config/             # Configuration files
 ```
 
-## Creating a Custom Processor
+## Development Workflow
 
-### Basic Processor Structure
+### Git Workflow
+
+1. **Branch Naming Convention**
+   ```
+   feature/description
+   bugfix/description
+   hotfix/description
+   release/version
+   ```
+
+2. **Commit Message Format**
+   ```
+   type(scope): description
+
+   [optional body]
+   [optional footer]
+   ```
+
+3. **Pull Request Process**
+   ```bash
+   # Create feature branch
+   git checkout -b feature/new-feature
+
+   # Make changes and commit
+   git add .
+   git commit -m "feat(data): add new data processing pipeline"
+
+   # Push changes
+   git push origin feature/new-feature
+   ```
+
+### Code Review Checklist
+
+- [ ] Code follows style guide
+- [ ] Tests are included
+- [ ] Documentation is updated
+- [ ] No security vulnerabilities
+- [ ] Performance impact considered
+
+## Code Standards
+
+### Python Style Guide
 
 ```python
-# processor.py
-from hysds.celery import app
+from typing import Dict, List, Optional
 
-@app.task
-class ExampleProcessor(object):
-    def __init__(self):
-        self.name = "Example Processor"
-        
-    def run(self, input_file, **kwargs):
+class DataProcessor:
+    """Process ICESat-2 data for biomass estimation.
+
+    Args:
+        config: Configuration dictionary
+        verbose: Enable verbose output
+
+    Attributes:
+        data_path: Path to input data
+    """
+
+    def __init__(self, config: Dict, verbose: bool = False) -> None:
+        self.config = config
+        self.verbose = verbose
+        self.data_path = config.get('data_path')
+
+    def process_data(self, input_data: List[float]) -> Optional[Dict]:
+        """Process input data and return results.
+
+        Args:
+            input_data: List of input values
+
+        Returns:
+            Processed data dictionary or None if processing fails
         """
-        Process the input file
-        """
-        try:
-            # Processing logic here
-            return {
-                "status": "success",
-                "output": output_file
-            }
-        except Exception as e:
-            raise RuntimeError(f"Processing failed: {str(e)}")
+        if not input_data:
+            return None
+
+        # Processing logic here
+        results = {'processed': True}
+        return results
 ```
 
-### Processor Configuration
+### Code Quality Tools
 
-```yaml
-# processor_config.yml
-processor:
-  name: "example_processor"
-  version: "1.0.0"
-  command: "python processor.py"
-  
-  inputs:
-    - name: "input_file"
-      type: "File"
-      required: true
-      
-  outputs:
-    - name: "output_file"
-      type: "File"
-```
+```bash
+# Run linter
+flake8 src tests
 
-## Working with Data
+# Run type checker
+mypy src
 
-### Data Access
+# Format code
+black src tests
 
-```python
-from hysds.dataset import Dataset
-
-def access_dataset(dataset_id):
-    dataset = Dataset(dataset_id)
-    
-    # Access metadata
-    metadata = dataset.metadata
-    
-    # Get file paths
-    files = dataset.get_files()
-    
-    return files
-```
-
-### Data Publishing
-
-```python
-from hysds.dataset import publish
-
-def publish_results(data_file, metadata):
-    """Publish processing results"""
-    dataset_id = publish(
-        path=data_file,
-        metadata=metadata,
-        dataset_type="example_product"
-    )
-    return dataset_id
+# Sort imports
+isort src tests
 ```
 
 ## Testing
@@ -142,181 +221,217 @@ def publish_results(data_file, metadata):
 ### Unit Tests
 
 ```python
-# test_processor.py
-import unittest
-from hysds.tests import HySDSTestCase
+# tests/unit/test_processor.py
+import pytest
+from src.data.processor import DataProcessor
 
-class TestExampleProcessor(HySDSTestCase):
-    def setUp(self):
-        super().setUp()
-        self.processor = ExampleProcessor()
-        
-    def test_processing(self):
-        result = self.processor.run("test_input.data")
-        self.assertEqual(result["status"], "success")
+def test_process_data():
+    # Arrange
+    processor = DataProcessor({'data_path': 'test/path'})
+    test_data = [1.0, 2.0, 3.0]
+
+    # Act
+    result = processor.process_data(test_data)
+
+    # Assert
+    assert result is not None
+    assert result['processed'] is True
 ```
 
 ### Integration Tests
 
 ```python
-# test_integration.py
-import unittest
-from hysds.tests import HySDSIntegrationTestCase
+# tests/integration/test_pipeline.py
+import pytest
+from src.pipeline import Pipeline
 
-class TestIntegration(HySDSIntegrationTestCase):
-    def test_end_to_end(self):
-        # Submit job
-        job_id = self.submit_job(
-            job_type="example_processor",
-            params={"input_file": "test.data"}
-        )
+@pytest.mark.integration
+def test_full_pipeline():
+    # Setup pipeline
+    pipeline = Pipeline()
+    
+    # Run pipeline
+    result = pipeline.run()
+    
+    # Verify results
+    assert result.status == 'success'
+```
+
+### Running Tests
+
+```bash
+# Run all tests
+pytest
+
+# Run with coverage
+pytest --cov=src tests/
+
+# Run specific test
+pytest tests/unit/test_processor.py
+```
+
+## Documentation
+
+### Code Documentation
+
+```python
+def calculate_biomass(height: float, density: float) -> float:
+    """Calculate forest biomass using allometric equations.
+
+    Args:
+        height: Tree height in meters
+        density: Wood density in g/cm³
+
+    Returns:
+        Biomass estimate in Mg/ha
+
+    Raises:
+        ValueError: If input parameters are invalid
+
+    Example:
+        >>> calculate_biomass(25.0, 0.5)
+        150.75
+    """
+```
+
+### API Documentation
+
+```python
+@app.post("/biomass")
+async def calculate_biomass(
+    request: BiomassRequest
+) -> BiomassResponse:
+    """Calculate biomass for given coordinates.
+
+    Args:
+        request: BiomassRequest object containing coordinates
+
+    Returns:
+        BiomassResponse with calculated biomass
+
+    Example:
+        curl -X POST "api/biomass" -d '{"lat": 65.5, "lon": -147.5}'
+    """
+```
+
+## Performance Optimization
+
+### Profiling
+
+```python
+import cProfile
+import pstats
+
+def profile_function():
+    profiler = cProfile.Profile()
+    profiler.enable()
+    
+    # Function to profile
+    result = process_large_dataset()
+    
+    profiler.disable()
+    stats = pstats.Stats(profiler).sort_stats('cumulative')
+    stats.print_stats()
+```
+
+### Memory Management
+
+```python
+def process_large_dataset():
+    # Use generators for memory efficiency
+    for chunk in pd.read_csv('large_file.csv', chunksize=1000):
+        process_chunk(chunk)
         
-        # Wait for completion
-        status = self.wait_for_job(job_id)
-        self.assertEqual(status, "completed")
+    # Clean up
+    gc.collect()
 ```
-
-## API Development
-
-### REST API Extension
-
-```python
-from flask import Blueprint, jsonify
-
-api = Blueprint('custom_api', __name__)
-
-@api.route('/custom/endpoint', methods=['GET'])
-def custom_endpoint():
-    try:
-        # Implementation
-        return jsonify({"status": "success"})
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-```
-
-### Job Type Development
-
-```python
-from hysds.job_types import register_job_type
-
-@register_job_type
-class CustomJobType:
-    name = "custom_job"
-    version = "1.0.0"
-    
-    def run(self, params):
-        """Execute the job"""
-        # Implementation
-        pass
-```
-
-## Debugging and Monitoring
-
-### Logging
-
-```python
-import logging
-
-logger = logging.getLogger("hysds")
-
-def setup_logging():
-    logger.setLevel(logging.DEBUG)
-    handler = logging.StreamHandler()
-    formatter = logging.Formatter(
-        '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-    )
-    handler.setFormatter(formatter)
-    logger.addHandler(handler)
-```
-
-### Metrics Collection
-
-```python
-from hysds.metrics import collect_metrics
-
-def monitor_performance():
-    metrics = collect_metrics()
-    
-    # Custom metrics
-    metrics.update({
-        "custom_metric": calculate_metric(),
-        "processing_time": measure_time()
-    })
-    
-    return metrics
-```
-
-## Contributing Guidelines
-
-### Code Style
-- Follow PEP 8 guidelines
-- Use type hints for Python 3.8+
-- Document all public methods and classes
-- Write meaningful commit messages
-
-### Pull Request Process
-1. Fork the repository
-2. Create a feature branch
-3. Make changes and add tests
-4. Submit pull request
-5. Address review comments
-
-### Documentation
-- Update relevant documentation
-- Include docstrings
-- Add example usage
-- Update changelog
-
-## Best Practices
-
-### Development Tips
-1. Use virtual environments
-2. Run tests locally before committing
-3. Keep components modular
-4. Follow security guidelines
-
-### Performance Considerations
-1. Optimize data access patterns
-2. Use appropriate caching
-3. Monitor resource usage
-4. Profile code performance
 
 ## Deployment
 
-### Local Testing
+### Production Build
 
 ```bash
-# Build and run locally
-docker-compose -f docker-compose.dev.yml up
+# Build Docker image
+docker build -t icesat2-boreal:latest .
 
-# Run tests
-pytest tests/
+# Run container
+docker run -d \
+    --name icesat2-boreal \
+    -p 8000:8000 \
+    -v data:/app/data \
+    icesat2-boreal:latest
 ```
 
-### CI/CD Pipeline
+### Continuous Integration
 
 ```yaml
 # .github/workflows/ci.yml
 name: CI
+
 on: [push, pull_request]
+
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
       - name: Run tests
         run: |
-          pip install -r requirements.txt
-          pytest tests/
+          pip install -r requirements-dev.txt
+          pytest
 ```
 
-## Additional Resources
+## Troubleshooting
 
-- [API Documentation](../api)
-- [Example Projects](../examples)
-- [Community Forum](https://hysds-core.atlassian.net/)
-- [GitHub Repository](https://github.com/hysds)
+### Common Issues
+
+1. **Memory Errors**
+   ```python
+   # Solution: Use chunked processing
+   def process_large_file():
+       with dask.config.set(temporary_directory='/tmp'):
+           df = dd.read_csv('large_file.csv')
+           result = df.map_partitions(process_chunk)
+   ```
+
+2. **Performance Issues**
+   ```python
+   # Solution: Use parallel processing
+   from multiprocessing import Pool
+
+   with Pool(processes=4) as pool:
+       results = pool.map(process_data, data_chunks)
+   ```
+
+### Debugging Tips
+
+```python
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+
+def process_data():
+    try:
+        logger.debug("Starting data processing")
+        # Processing logic
+        logger.info("Processing completed")
+    except Exception as e:
+        logger.error(f"Error processing data: {str(e)}")
+        raise
+```
 
 ---
 
-For detailed API references and advanced topics, please refer to our [documentation](https://hysds-core.atlassian.net/wiki/spaces/HYS/overview).
+## Additional Resources
+
+- [API Documentation](api.md)
+- [Configuration Guide](configuration.md)
+- [Contributing Guide](contributing.md)
+- [Change Log](changelog.md)
+
+---
+
+*For questions or support, please contact the development team at dev@icesat2-boreal.org*

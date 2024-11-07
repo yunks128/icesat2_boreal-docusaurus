@@ -1,159 +1,297 @@
----
-sidebar_position: 2
----
+# Getting Started
 
-# Getting Started with HySDS
+Welcome to the ICESat-2 Boreal Forest Biomass Mapping project! This guide will help you get up and running quickly.
 
-This guide will help you set up and run your first HySDS deployment. We'll cover the basic concepts, installation process, and initial configuration.
+## Table of Contents
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Basic Usage](#basic-usage)
+- [Examples](#examples)
+- [Next Steps](#next-steps)
 
 ## Prerequisites
 
-Before you begin, ensure you have:
-
+### Required Software
 - Python 3.8 or higher
-- Docker installed and running
-- Access to one of the following environments:
-  - AWS account
-  - On-premise computing resources
-  - NASA HECC access (optional)
-- Git for version control
+- Git
+- GDAL
+- Docker (optional)
 
-## Basic Components
+### Required Accounts
+- NASA Earthdata Login
+- MAAP Platform Access
+- AWS Account (optional)
 
-HySDS consists of several key components:
+### System Requirements
+```
+Minimum Requirements:
+- 8GB RAM
+- 50GB Storage
+- 4 CPU Cores
 
-### 1. Resource Management
-- **GRQ (Geo Region Query)**: Geospatial data management and faceted search
-- **Mozart**: Job management and workflow orchestration
-- **Metrics**: Runtime analytics for compute fleet
+Recommended:
+- 16GB RAM
+- 200GB Storage
+- 8 CPU Cores
+- GPU (for ML workflows)
+```
 
-### 2. Processing Components
-- **Factotum**: "Hot" helper workers for low-latency processes
-- **Verdi Workers**: Distributed compute nodes running at scale
-- **Data Management**: Rolling storage of data products
+## Installation
 
-## Quick Installation
-
-1. Clone the HySDS repository:
+### 1. Clone the Repository
 ```bash
-git clone https://github.com/hysds/hysds.git
-cd hysds
+git clone https://github.com/nasa/icesat2_boreal.git
+cd icesat2_boreal
 ```
 
-2. Install using pip:
+### 2. Create Virtual Environment
 ```bash
-pip install hysds
+# Create and activate virtual environment
+python -m venv venv
+
+# On Unix/macOS
+source venv/bin/activate
+
+# On Windows
+.\venv\Scripts\activate
 ```
 
-3. Set up basic configuration:
+### 3. Install Dependencies
 ```bash
-hysds-configure init
+# Install basic requirements
+pip install -r requirements.txt
+
+# For development
+pip install -r requirements-dev.txt
 ```
 
-## Basic Configuration
-
-Create a basic configuration file `config.yml`:
-
-```yaml
-MOZART_URL: http://localhost:8888
-GRQ_URL: http://localhost:8878
-METRICS_URL: http://localhost:8866
-FACTOTUM_URL: http://localhost:8844
-
-QUEUE_NAMING_CONVENTION: "job_worker-%s"
-REDIS_JOB_STATUS_URL: "redis://localhost:6379"
-REDIS_JOB_STATUS_KEY: "jobs"
-```
-
-## First Steps
-
-### 1. Start Core Services
+### 4. Configure Environment
 ```bash
-hysds-service start mozart
-hysds-service start grq
-hysds-service start metrics
+# Copy example environment file
+cp .env.example .env
+
+# Edit .env with your credentials
+nano .env
 ```
 
-### 2. Verify Installation
+Example `.env` file:
 ```bash
-hysds-status check
+EARTHDATA_USERNAME=your_username
+EARTHDATA_PASSWORD=your_password
+MAAP_API_KEY=your_api_key
+AWS_ACCESS_KEY_ID=your_aws_key
+AWS_SECRET_ACCESS_KEY=your_aws_secret
 ```
 
-### 3. Run a Test Job
-```bash
-hysds-submit-job --type example --queue test-queue
-```
+## Quick Start
 
-## Basic Usage Examples
-
-### Submit a Processing Job
+### 1. Basic Data Processing
 ```python
-from hysds.orchestrator import submit_job
+from icesat2_boreal import BiomassProcessor
 
-job_params = {
-    "input_file": "example.data",
-    "processing_type": "standard"
-}
+# Initialize processor
+processor = BiomassProcessor()
 
-submit_job("example-job-type", job_params)
+# Process sample data
+result = processor.process_area(
+    latitude=65.5,
+    longitude=-147.5,
+    radius_km=10
+)
+
+# Display results
+print(result.summary())
 ```
 
-### Monitor Job Status
+### 2. Run Sample Analysis
+```bash
+# Run sample analysis script
+python scripts/sample_analysis.py
+
+# View results in notebooks/sample_results.ipynb
+jupyter notebook notebooks/sample_results.ipynb
+```
+
+### 3. Docker Quick Start
+```bash
+# Build and run with Docker
+docker compose up -d
+
+# Access the web interface
+open http://localhost:8000
+```
+
+## Basic Usage
+
+### Data Processing Pipeline
+
 ```python
-from hysds.mozart import get_job_status
+from icesat2_boreal import Pipeline
+from icesat2_boreal.config import Config
 
-status = get_job_status("job_id_123")
-print(f"Job Status: {status}")
+# Load configuration
+config = Config.from_file('config/default.yml')
+
+# Initialize pipeline
+pipeline = Pipeline(config)
+
+# Process region of interest
+results = pipeline.run(
+    bbox={
+        'min_lat': 60.0,
+        'max_lat': 70.0,
+        'min_lon': -150.0,
+        'max_lon': -140.0
+    },
+    date_range={
+        'start': '2020-01-01',
+        'end': '2020-12-31'
+    }
+)
+
+# Save results
+results.save('output/results.nc')
 ```
 
-## Common Deployment Patterns
+### Visualization
 
-1. **Single Instance Setup**
-   - Good for development and testing
-   - All components on one machine
+```python
+from icesat2_boreal.viz import BiomassMap
 
-2. **Basic Production Setup**
-   - Separate machines for Mozart and GRQ
-   - Distributed Verdi workers
+# Create visualization
+viz = BiomassMap(results)
 
-3. **Hybrid Cloud Setup**
-   - Components spread across cloud and on-premise
-   - Auto-scaling worker groups
+# Generate map
+viz.plot(
+    title='Boreal Forest Biomass',
+    colormap='viridis',
+    save_path='output/biomass_map.png'
+)
+```
+
+### API Usage
+
+```python
+from icesat2_boreal.client import API
+
+# Initialize API client
+api = API(token='your_api_token')
+
+# Get biomass estimate
+biomass = api.get_biomass(
+    lat=65.5,
+    lon=-147.5,
+    date='2024-01-01'
+)
+
+print(f"Estimated biomass: {biomass['value']} {biomass['units']}")
+```
+
+## Examples
+
+### 1. Basic Biomass Estimation
+```python
+from icesat2_boreal import estimate_biomass
+
+# Single point estimation
+result = estimate_biomass(lat=65.5, lon=-147.5)
+print(f"Biomass estimate: {result.value} Mg/ha")
+```
+
+### 2. Time Series Analysis
+```python
+from icesat2_boreal import TimeSeries
+
+# Create time series
+ts = TimeSeries(
+    latitude=65.5,
+    longitude=-147.5,
+    start_date='2020-01-01',
+    end_date='2024-01-01'
+)
+
+# Plot results
+ts.plot(show_uncertainty=True)
+```
+
+### 3. Batch Processing
+```python
+from icesat2_boreal import BatchProcessor
+
+# Define study areas
+areas = [
+    {'name': 'Site 1', 'lat': 65.5, 'lon': -147.5},
+    {'name': 'Site 2', 'lat': 66.0, 'lon': -148.0},
+]
+
+# Process all sites
+processor = BatchProcessor()
+results = processor.process_sites(areas)
+
+# Export results
+results.to_csv('results.csv')
+```
 
 ## Next Steps
 
-1. Learn about [Advanced Configuration](../guides/configuration)
-2. Explore [Scaling Options](../guides/scaling)
-3. Review [Security Best Practices](../guides/security)
-4. Check out [Example Workflows](../guides/workflows)
+### 1. Explore Advanced Features
+- [Advanced Processing Guide](docs/advanced-processing.md)
+- [Custom Algorithm Development](docs/algorithms.md)
+- [Validation Methods](docs/validation.md)
 
-## Troubleshooting
+### 2. Join the Community
+- [Subscribe to Mailing List](https://lists.nasa.gov/icesat2-boreal)
+- [Join Slack Channel](https://icesat2-boreal.slack.com)
+- [Attend Community Calls](docs/community.md)
 
-### Common Issues
+### 3. Contribute
+- [Development Guide](docs/development.md)
+- [Contributing Guidelines](CONTRIBUTING.md)
+- [Code of Conduct](CODE_OF_CONDUCT.md)
 
-1. **Connection Errors**
-   - Verify all services are running
-   - Check firewall settings
-   - Confirm correct URLs in config
+### 4. Additional Resources
+- [API Documentation](docs/api.md)
+- [User Guide](docs/user-guide.md)
+- [FAQ](docs/faq.md)
 
-2. **Job Failures**
-   - Check logs in Mozart UI
-   - Verify worker configuration
-   - Ensure data access permissions
+## Common Issues and Solutions
 
-### Getting Help
+### Connection Problems
+```python
+# Retry with exponential backoff
+from icesat2_boreal.utils import retry_with_backoff
 
-- Visit our [GitHub Issues](https://github.com/hysds/hysds/issues)
-- Join our [Community Slack](https://hysds.slack.com)
-- Check the [FAQ Section](../guides/faq)
+@retry_with_backoff(max_retries=3)
+def fetch_data():
+    return api.get_data()
+```
 
-## Resource Links
+### Memory Management
+```python
+# Process large datasets in chunks
+from icesat2_boreal.utils import ChunkProcessor
 
-- [API Documentation](../guides/api)
-- [Architecture Overview](../guides/architecture)
-- [Community Guidelines](../guides/community)
-- [Example Applications](../guides/examples)
+processor = ChunkProcessor(chunk_size='1000MB')
+processor.process_file('large_dataset.nc')
+```
+
+### Error Handling
+```python
+try:
+    result = processor.run()
+except DataQualityError as e:
+    logger.warning(f"Data quality issue: {e}")
+    result = processor.run(fallback=True)
+```
+
+## Support
+
+If you need help:
+1. Check the [Documentation](https://docs.icesat2-boreal.org)
+2. Ask in [GitHub Discussions](https://github.com/nasa/icesat2_boreal/discussions)
+3. Contact support: support@icesat2-boreal.org
 
 ---
 
-For more detailed information, please refer to our [full documentation](https://hysds-core.atlassian.net/wiki/spaces/HYS/overview).
+*For more detailed information, please refer to our [comprehensive documentation](https://docs.icesat2-boreal.org).*

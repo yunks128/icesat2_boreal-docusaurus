@@ -1,200 +1,191 @@
----
-sidebar_position: 4
----
+# Join the ICESat-2 Boreal Forest Project
 
-# Join the HySDS Community
+<!-- ![Community Banner](assets/community-banner.png) -->
 
-Welcome to the HySDS community! This guide will help you connect with other members and start contributing to the project.
+## 🌟 Why Join Us?
 
-## Community Overview
+Welcome to the ICESat-2 Boreal Forest Biomass Mapping project! We're a collaborative community working to revolutionize our understanding of Earth's boreal forests through advanced satellite technology and data science.
 
-HySDS is a thriving open source community focused on hybrid cloud science data processing:
+## 🎯 Project Impact
 
-- **Active Members**: 50+ developers and integrators
-- **Project Scale**: 78+ repositories, 83+ releases
-- **Mission Impact**: Powers 33+ NASA-funded projects
-- **Regular Updates**: Bi-weekly coordination meetings
-- **Development Model**: Community-driven, open source approach
+Our work directly contributes to:
+- Climate change research
+- Forest conservation efforts
+- Carbon cycle understanding
+- Environmental policy making
+- Global ecosystem monitoring
 
-## Ways to Get Involved
+## 👥 Who We're Looking For
+
+### Scientists and Researchers
+- Remote sensing specialists
+- Forest ecologists
+- Climate scientists
+- Data scientists
+- Geospatial analysts
+
+### Developers and Engineers
+- Python developers
+- Machine learning engineers
+- GIS specialists
+- Cloud computing experts
+- DevOps engineers
+
+### Domain Experts
+- Forestry professionals
+- Environmental scientists
+- Policy analysts
+- Science communicators
+- Project managers
+
+## 🌱 Getting Started
 
 ### 1. Join Our Communication Channels
-
-#### Slack Workspaces
-- **Main Workspace**: [hysds.slack.com](https://hysds.slack.com)
-- **Key Channels**:
-  - `#hysds-community`: General discussion and help
-  - `#hysds-developers`: Technical discussions
-  - `#hysds-intern`: New member support
-  - `#hysds-general`: Project updates
-  - `#hysds-sa`: System administration topics
-
-#### Community Forums
-- [Community Wiki](https://hysds-core.atlassian.net/wiki/spaces/HYS/overview)
-- [GitHub Discussions](https://github.com/hysds/hysds/discussions)
+- [Slack Workspace](https://icesat2-boreal.slack.com)
+- [Mailing List](mailto:icesat2-boreal-subscribe@lists.nasa.gov)
+- [GitHub Discussions](https://github.com/nasa/icesat2_boreal/discussions)
 
 ### 2. Attend Community Events
+- **Monthly Updates**: First Thursday, 2 PM EST
+- **Technical Workshops**: Bi-monthly
+- **Code Sprints**: Quarterly
+- **Annual Symposium**: September each year
 
-#### Regular Meetings
-- Bi-weekly multi-mission coordination meetings
-- Development team sync-ups
-- Community workshops
-- Technical presentations
+### 3. Find Your Path
 
-#### How to Join
-1. Subscribe to the community calendar
-2. Register for upcoming events
-3. Participate in discussions
-4. Share your experiences
+#### For Scientists
+```mermaid
+graph TD
+    A[Join Community] --> B[Review Documentation]
+    B --> C[Attend Science Meeting]
+    C --> D[Contribute Analysis]
+    D --> E[Lead Research Initiative]
+```
 
-### 3. Start Contributing
+#### For Developers
+```mermaid
+graph TD
+    A[Join Community] --> B[Setup Environment]
+    B --> C[Fix Beginner Issues]
+    C --> D[Contribute Features]
+    D --> E[Become Core Developer]
+```
 
-#### Beginning Steps
-1. Star our [GitHub repositories](https://github.com/hysds)
-2. Watch key repositories for updates
-3. Read our [Contributing Guide](../contribute)
-4. Find "good first issues" to work on
+## 🎓 Learning Resources
 
-#### Contribution Areas
-- Code development
-- Documentation
-- Testing
-- User support
-- Use case sharing
+### Beginner Resources
+- [Project Overview](docs/overview.md)
+- [Technical Documentation](docs/technical.md)
+- [Tutorial Videos](https://youtube.com/icesat2boreal)
+- [Sample Notebooks](notebooks/examples)
 
-## Learning Resources
+### Advanced Materials
+- [Algorithm Documentation](docs/algorithms.md)
+- [API Reference](docs/api.md)
+- [Research Papers](docs/publications.md)
+- [Technical Workshops](docs/workshops.md)
 
-### 1. Documentation
-- [Getting Started Guide](../docs/getting-started)
-- [Architecture Overview](../guides/architecture)
-- [Development Guide](../guides/development)
-- [API Documentation](../guides/api)
+## 🤝 Mentorship Program
 
-### 2. Example Projects
-Current projects using HySDS:
+We offer a structured mentorship program for new contributors:
 
-- **Mission Systems**:
-  - NISAR SDS
-  - SWOT SDS
-  - SMAP with HySDS (SWH)
-  - SNWG OPERA
+1. **Onboarding**
+   - Project orientation
+   - Technical setup support
+   - Community introduction
 
-- **Research Projects**:
-  - Multi-Mission Algorithm and Analysis Platform (MAAP)
-  - PO.DAAC SWODLR
-  - ASTER Volcano Archive (AVA)
-  - ImgSPEC
+2. **Skill Development**
+   - Guided contributions
+   - Code reviews
+   - Regular feedback
 
-### 3. Tutorials and Guides
-- Step-by-step tutorials
-- Best practices documentation
-- Video walkthroughs
-- Code examples
+3. **Project Advancement**
+   - Research opportunities
+   - Publication involvement
+   - Leadership roles
 
-## Support Network
+## 🏆 Recognition and Benefits
 
-### Getting Help
-1. **Technical Support**
-   - Stack Overflow tags
-   - GitHub issues
-   - Community Slack channels
+### Professional Development
+- Co-authorship opportunities
+- Conference presentations
+- Skill workshops
+- Networking events
 
-2. **Documentation Help**
-   - Wiki contributions
-   - Documentation issues
-   - Community guides
-
-3. **General Questions**
-   - Community forums
-   - Mailing lists
-   - Regular office hours
-
-## Recognition Programs
-
-### Community Achievements
+### Project Recognition
 - Contributor highlights
-- Project statistics
-- Release acknowledgments
-- Community spotlights
+- Publication credits
+- Community awards
+- Project leadership opportunities
 
-### Contribution Opportunities
-- Code reviews
-- Documentation improvements
-- Bug fixes
-- Feature development
-- Community support
+## 📅 Upcoming Events
 
-## Project Governance
+| Event | Date | Location | Description |
+|-------|------|-----------|------------|
+| New Contributor Workshop | Monthly | Virtual | Introduction to project tools and workflows |
+| Code Sprint | Quarterly | Virtual | Focused development on specific features |
+| Science Meeting | Bi-weekly | Virtual | Research updates and discussions |
+| Annual Symposium | September | In-person/Hybrid | Project showcase and planning |
 
-### Community Structure
-- Open source community model
-- Collaborative decision-making
-- Transparent development process
-- Regular community feedback
+## 🌍 Global Community
 
-### Development Process
-- Public GitHub repositories
-- Open issue tracking
-- Community pull requests
-- Collaborative review process
+Our community spans:
+- 20+ Countries
+- 50+ Research Institutions
+- 100+ Active Contributors
+- Multiple Time Zones
 
-## Code of Conduct
+## 📬 Contact Information
 
-We maintain a welcoming and inclusive environment:
+### Project Leadership
+- **Principal Investigator**: Laura Duncanson (lduncans@umd.edu)
+- **Technical Lead**: [Name] (email@institution.edu)
+- **Community Manager**: [Name] (email@institution.edu)
 
-1. **Respect**
-   - Value diverse perspectives
-   - Professional communication
-   - Constructive feedback
+### Support Channels
+- Technical Support: support@icesat2-boreal.org
+- Community Help: community@icesat2-boreal.org
+- General Inquiries: info@icesat2-boreal.org
 
-2. **Collaboration**
-   - Help others learn
-   - Share knowledge
-   - Work together
+## 🔄 Next Steps
 
-3. **Quality**
-   - Follow best practices
-   - Write tests
-   - Document changes
+1. **Join Communication Channels**
+   ```bash
+   # Get started with our Slack
+   Visit: icesat2-boreal.slack.com/signup
+   ```
 
-## Next Steps
+2. **Set Up Development Environment**
+   ```bash
+   git clone https://github.com/nasa/icesat2_boreal.git
+   cd icesat2_boreal
+   python -m venv venv
+   source venv/bin/activate
+   pip install -r requirements.txt
+   ```
 
-### 1. Get Started
-- Join Slack channels
-- Introduce yourself
-- Review documentation
-- Find starter tasks
+3. **Find First Task**
+   - Check [good first issues](https://github.com/nasa/icesat2_boreal/labels/good%20first%20issue)
+   - Review [contribution guide](CONTRIBUTING.md)
+   - Attend next community call
 
-### 2. Build Skills
-- Follow tutorials
-- Read architecture docs
-- Try example projects
-- Ask questions
+## 🤔 FAQ
 
-### 3. Contribute
-- Pick a focus area
-- Find a mentor
-- Start small
-- Stay consistent
+**Q: Do I need specific expertise to contribute?**
+A: We welcome contributors at all levels and provide mentorship and support.
 
-## Contact Information
+**Q: How much time commitment is expected?**
+A: Contribution levels are flexible and can range from occasional to regular involvement.
 
-### Community Coordinators
-- GitHub: [HySDS Organization](https://github.com/hysds)
-- Slack: [HySDS Workspace](https://hysds.slack.com)
-- Wiki: [Community Portal](https://hysds-core.atlassian.net/)
+**Q: Can I contribute remotely?**
+A: Yes! Most of our collaboration is remote-friendly and asynchronous.
 
-### Additional Resources
-- [Issue Tracker](https://hysds-core.atlassian.net/jira/software/c/projects/HC/issues)
-- [Release Notes](https://github.com/hysds/hysds/releases)
-- [Community Calendar](https://calendar.google.com/calendar/embed?src=hysds.community)
+## 📜 Code of Conduct
+
+We maintain a welcoming, inclusive community. Please review our [Code of Conduct](CODE_OF_CONDUCT.md) before participating.
 
 ---
 
-Ready to join? Start by:
-1. Joining our Slack workspace
-2. Introducing yourself in #hysds-community
-3. Reading our [Getting Started Guide](../docs/getting-started)
-4. Finding your first contribution opportunity
+*Join us in advancing Earth science through open collaboration and innovation!*
 
-Welcome to HySDS!
+[Join Our Slack](https://icesat2-boreal.slack.com) | [View on GitHub](https://github.com/nasa/icesat2_boreal) | [Project Website](https://icesat2-boreal.nasa.gov)

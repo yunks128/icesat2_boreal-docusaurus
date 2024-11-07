@@ -1,104 +1,137 @@
-# Community
+# Community Guidelines
 
-HySDS (Hybrid Cloud Science Data Processing System) is an open source science data processing system used across many large-scale Earth Science missions, data production, and analysis systems. This page provides information about the HySDS community, contributions, and resources.
+Welcome to the ICESat-2 Boreal Forest Biomass Mapping project community! This document outlines how to engage with and contribute to our community.
 
-## Community Overview
+## 🌟 Our Values
 
-The HySDS community consists of:
-- 50+ developers who have used HySDS for science data processing
-- 30+ contributors to the HySDS Core
-- 78 repositories in the organization
-- 5 major versions in its evolution 
-- 83 releases (as of April 2024)
-- 13 active projects using HySDS in 2024
-- 33 total NASA-funded projects to date
+- **Open Science**: We believe in transparent, reproducible research that benefits the global scientific community
+- **Collaboration**: We welcome contributors from diverse backgrounds and expertise levels
+- **Innovation**: We encourage creative approaches to solving complex earth science challenges
+- **Inclusivity**: We maintain a welcoming environment for all community members
 
-## Community Collaboration
+## 🤝 Ways to Contribute
 
-The HySDS community follows these collaborative practices:
+### 1. Code Contributions
+- Bug fixes
+- Feature implementations
+- Documentation improvements
+- Performance optimizations
+- Test coverage expansions
 
-- **Regular Coordination**: Bi-weekly multi-mission coordination meetings across development and operations teams
-- **Shared Benefits**: Community contributions including new features, bug fixes, and operational procedures from any project benefit all other projects
-- **Active Communication**: Public GitHub, JIRA, Confluence wiki, and Slack channels enable multi-project sharing and collaboration
-- **Open Source Approach**: Community software contributions drive multi-mission benefits
+### 2. Non-Code Contributions
+- Dataset validation
+- Scientific feedback
+- Use case documentation
+- Tutorial creation
+- Bug reporting
+- Community support
 
-## Active Projects
+## 📊 Project Structure
 
-HySDS is currently being used by several major NASA Earth Science missions and projects:
+```
+icesat2_boreal/
+├── data/                 # Data processing scripts
+├── docs/                 # Documentation
+├── notebooks/           # Jupyter notebooks
+├── src/                 # Source code
+└── tests/              # Test suite
+```
 
-### Missions
-- NISAR 
-- SWOT
-- SMAP with HySDS (SWH)
-- SNWG OPERA
-- OCO-2 reprocessing
-- OCO-3 reprocessing
+## 🚀 Getting Started
 
-### Projects
-- Multi-Mission Algorithm and Analysis Platform (MAAP)
-- PO.DAAC SWODLR
-- ASTER AVA
-- ImgSPEC
-- SISTER-SBG
-- And more
+1. **Fork the Repository**
+   ```bash
+   git clone https://github.com/your-username/icesat2_boreal.git
+   cd icesat2_boreal
+   ```
 
-## Key Innovations
+2. **Set Up Development Environment**
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # or `venv\Scripts\activate` on Windows
+   pip install -r requirements.txt
+   ```
 
-The HySDS community has driven several significant innovations:
+3. **Create a Branch**
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
 
-- First NASA Science Data System to demonstrate data production scalability to over 8,000 parallel compute nodes in the cloud
-- First SDS to run data production using lower cost and volatile compute in AWS spot market
-- Enabling first NASA EO Science Data Systems to do operations in the cloud
-- First SDS to run data production spanning across AWS, on-premises, and NASA HECC Super Computing
-- First SDS to span across AWS, GCP, Azure, & NASA HECC
-- First SDS to integrate real-time faceted analytics with operations
+## 💬 Communication Channels
 
-## Community Resources
+- **GitHub Discussions**: Technical discussions and feature requests
+- **Slack Workspace**: Real-time community chat
+- **Monthly Meetings**: Virtual community gatherings
+- **Mailing List**: Updates and announcements
 
-### Code & Documentation
-- Source code: [https://github.com/hysds/](https://github.com/hysds/)
-- Releases: [https://github.com/hysds/hysds-framework/releases](https://github.com/hysds/hysds-framework/releases)
-- Community wiki: [https://hysds-core.atlassian.net/](https://hysds-core.atlassian.net/)
-- Issue tracking: [https://hysds-core.atlassian.net/jira/software/c/projects/HC/issues](https://hysds-core.atlassian.net/jira/software/c/projects/HC/issues)
+## 📜 Code of Conduct
 
-### Communication Channels
-Active Slack channels:
-- #hysds-community
-- #hysds-developers  
-- #hysds-intern
-- #hysds-general
-- #hysds-sa
+### Expected Behavior
+- Be respectful and inclusive
+- Use welcoming language
+- Be collaborative
+- Gracefully accept constructive criticism
+- Focus on what is best for the community
 
-## Getting Involved
+### Unacceptable Behavior
+- Harassment of any kind
+- Discriminatory jokes and language
+- Personal or political attacks
+- Publishing others' private information
+- Other conduct that could reasonably be considered inappropriate
 
-The HySDS community welcomes new contributors and users. Here are ways to get involved:
+## 🏆 Recognition
 
-1. Join the bi-weekly multi-mission coordination meetings
-2. Participate in community Slack channels
-3. Contribute code via GitHub
-4. Report issues and feature requests in JIRA
-5. Share operational procedures and best practices
-6. Collaborate on new features and capabilities
+We value our contributors! Ways we recognize contributions:
+- Contributors list in our documentation
+- Author credits in scientific publications
+- Acknowledgment in release notes
+- Community spotlight features
 
-## Project Highlights
+## 🎓 Resources for New Contributors
 
-Some notable achievements from the HySDS community:
+- [Beginner's Guide](./docs/getting-started.md)
+- [Development Setup](./docs/development.md)
+- [Coding Standards](./docs/coding-standards.md)
+- [Documentation Guide](./docs/documentation.md)
 
-- NISAR using HySDS to support processing > 300TB/day
-- SWOT used HySDS to process 2PB in first year
-- Data processing scalability to over 8,000 parallel nodes @ > 3-million processing jobs per day
-- Fault tolerant operations in low cost & volatile AWS spot market
-- Support for ML, GPU, multi-core processing at large scales
-- Hybrid processing across AWS, HECC, and on-premise
-- Low-latency urgent response & on-demand processing
+## 📅 Community Events
 
-## Citation
+- **Monthly Community Calls**: First Thursday of each month
+- **Quarterly Hackathons**: Focused development sprints
+- **Annual Symposium**: Project showcase and planning
+- **Training Workshops**: Regular skill-building sessions
 
-When referencing HySDS in publications, please use:
-DOI: 10.5281/zenodo.11118142
+## 🤔 Getting Help
 
-## Copyright Notice
+1. Check the [FAQ](./docs/faq.md)
+2. Search existing [Issues](https://github.com/nasa/icesat2_boreal/issues)
+3. Ask in GitHub Discussions
+4. Join our Slack channel
 
-Copyright 2024, by the California Institute of Technology. ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged. Any commercial use must be negotiated with the Office of Technology Transfer at the California Institute of Technology.
+## 📣 Stay Updated
 
-Reference herein to any specific commercial product, process, or service by trade name, trademark, manufacturer, or otherwise, does not constitute or imply its endorsement by the United States Government or the Jet Propulsion Laboratory, California Institute of Technology.
+- Watch our GitHub repository
+- Join our [mailing list](mailto:icesat2-boreal-subscribe@lists.nasa.gov)
+- Follow us on Twitter [@ICESat2Boreal](https://twitter.com/ICESat2Boreal)
+
+## ⚖️ License & Attribution
+
+This project is licensed under [Apache 2.0](LICENSE.md).
+
+## 🙏 Acknowledgments
+
+This project is developed with funding from:
+- NASA Arctic Boreal Vulnerability Experiment (ABoVE)
+- NASA Multi-Mission Algorithm and Analysis Platform (MAAP)
+
+## 📬 Contact
+
+- **Principal Investigator**: Laura Duncanson (lduncans@umd.edu)
+- **Community Manager**: [Name] (email@domain.com)
+- **Technical Lead**: [Name] (email@domain.com)
+
+---
+
+*Last Updated: November 2024*  
+*For more information, visit our [website](https://icesat2-boreal.nasa.gov)*

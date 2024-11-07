@@ -1,138 +1,204 @@
----
-sidebar_position: 2
----
+# About ICESat-2 Boreal Forest Biomass Mapping
 
-# About
+## Overview
 
-## What is HySDS?
-
-HySDS (Hybrid-Cloud Science Data Processing System) is an open source science data processing system powering large-scale Earth Science missions, data production, and analysis systems.
+The ICESat-2 Boreal Forest Biomass Mapping project represents a groundbreaking initiative to map and monitor the vast boreal forests using advanced satellite technology. By combining data from NASA's ICESat-2 satellite with Landsat/Sentinel-2 imagery and the Copernicus GLO30 Digital Elevation Model, we're creating unprecedented insights into one of Earth's most crucial ecosystems.
 
 ## Mission
 
-Our mission is to provide a scalable, adaptable solution for science data processing that bridges the gap between traditional on-premise computing and modern cloud infrastructure, enabling scientists and researchers to process unprecedented volumes of Earth Science data efficiently and cost-effectively.
+Our mission is to advance understanding of boreal forest dynamics and their role in the global carbon cycle through:
+- Precise biomass estimation
+- Long-term forest monitoring
+- Climate change impact assessment
+- Support for evidence-based policy decisions
 
-## Key Milestones
+## Key Technologies
 
-### Evolution Timeline
+### Satellite Systems
+- **ICESat-2/ATLAS**: Advanced Topographic Laser Altimeter System
+- **Landsat/Sentinel-2**: Multi-spectral imaging satellites
+- **Copernicus GLO30**: High-resolution digital elevation model
 
-- **2008**: ACCESS project initiates service-based science data processing
-- **2009**: Addition of processing provenance capabilities
-- **2011**: Integration of climate data processing workflows
-- **2012**: First implementation of SAR processing in AWS
-- **2014**: Introduction of automated urgent response processing
-- **2015**: First operational use in OCO-2 SDS L2 full physics production
-- **2017**: Scaled up to 8,200+ parallel nodes for Sentinel-1 production
-- **2022**: SWOT SDS enters operations
-- **2023**: OPERA SDS and SMAP with HySDS become operational
-- **2024**: Active deployment across 13 major projects
+### Processing Pipeline
+```mermaid
+graph LR
+    A[ICESat-2 Data] --> D[Data Integration]
+    B[Landsat/Sentinel-2] --> D
+    C[GLO30 DEM] --> D
+    D --> E[Processing Pipeline]
+    E --> F[Biomass Estimates]
+    F --> G[Validation]
+    G --> H[Final Products]
+```
 
-## Core Capabilities
+## Impact Areas
 
-### Unmatched Scalability & Performance
-Industry-leading processing capacity with 8,000+ parallel nodes handling over 3 million daily jobs and hundreds of terabytes of scientific data.
+### Climate Science
+- Carbon stock assessment
+- Ecosystem monitoring
+- Climate change research
+- Greenhouse gas modeling
 
-### True Hybrid-Cloud Flexibility
-First-ever science data system to seamlessly operate across multiple platforms including AWS, GCP, Azure, and NASA HECC with built-in cost optimization.
+### Forest Management
+- Resource inventory
+- Change detection
+- Conservation planning
+- Sustainable forestry
 
-### Proven Multi-Mission Excellence
-Trusted by 33+ NASA projects including NISAR, SWOT, and SMAP, with a thriving community of 50+ developers advancing Earth Science missions.
+### Policy Support
+- International agreements
+- Conservation strategies
+- Resource management
+- Climate action plans
 
-## Impact and Achievements
+## Research Focus
 
-### Notable Accomplishments
-- First NASA Science Data System (SDS) to demonstrate scalability to 8,000+ parallel nodes
-- First SDS to utilize AWS spot market for cost-efficient processing
-- Pioneer in hybrid operations spanning AWS, on-premises, and NASA HECC
-- First multi-cloud SDS spanning AWS, GCP, Azure, & NASA HECC
+### Current Research Priorities
+1. Improving biomass estimation accuracy
+2. Enhancing temporal resolution
+3. Reducing uncertainty
+4. Developing new algorithms
 
-### Mission Success
-Currently powers critical Earth Science missions:
-- NISAR (processing >300TB/day)
-- SWOT (processed 2PB in first year)
-- SMAP
-- SNWG OPERA
-- OCO-2/3 reprocessing
+### Innovation Areas
+- Machine learning applications
+- Uncertainty quantification
+- Multi-sensor fusion
+- Time series analysis
 
-## Community and Development
+## Project Team
 
-### Open Source Community
-- 50+ active developers and integrators
-- 30+ core contributors
-- 78 repositories
-- 83 releases (as of April 2024)
-- Active public GitHub, JIRA, and Wiki presence
+### Leadership
+| Name | Role | Affiliation |
+|------|------|-------------|
+| Laura Duncanson | Principal Investigator | University of Maryland |
+| Paul Montesano | Co-Investigator | NASA GSFC |
+| Nathan Thomas | Co-Investigator | Edge Hill University |
 
-### Development Model
-- Community-driven approach
-- Bi-weekly multi-mission coordination
-- Transparent development process
-- Regular community contributions
+### Key Contributors
+- Remote sensing specialists
+- Forest ecologists
+- Data scientists
+- Software engineers
+- GIS experts
 
-## Technical Innovation
+## Funding and Support
 
-### Processing Capabilities
-- Scalable processing across multiple platforms
-- Machine learning and GPU processing support
-- Low-latency urgent response processing
-- Cost-production model estimation
-
-### Architecture Features
-- Distributed computing framework
-- Fault-tolerant processing
-- Real-time analytics
-- Flexible deployment options
-
-## Current Projects
-
-### Active Missions
-- NISAR SDS
-- SWOT SDS
-- SMAP with HySDS (SWH)
-- SNWG OPERA SDS
-- OCO-2/3 reprocessing
-
-### Research Projects
+### Primary Funding
+- NASA Arctic Boreal Vulnerability Experiment (ABoVE)
 - Multi-Mission Algorithm and Analysis Platform (MAAP)
-- PO.DAAC SWODLR
-- ASTER Volcano Archive (AVA)
-- ImgSPEC
-- SISTER-SBG
 
-## Future Direction
+### Supporting Organizations
+- University of Maryland
+- NASA Goddard Space Flight Center
+- Edge Hill University
+- DevelopmentSeed, Inc.
 
-### Vision
-Continue evolving as the leading open-source solution for hybrid cloud science data processing, enabling breakthrough scientific discoveries through efficient, scalable data processing capabilities.
+## Technical Capabilities
 
-### Roadmap
-- Enhanced machine learning integration
-- Expanded cloud provider support
-- Advanced automation capabilities
-- Improved cost optimization
-- Enhanced security features
+### Data Processing
+- High-performance computing
+- Cloud-based processing
+- Automated workflows
+- Quality control systems
+
+### Analysis Tools
+- Custom algorithms
+- Statistical modeling
+- Machine learning
+- Visualization tools
+
+## Applications
+
+### Scientific Research
+```python
+# Example biomass calculation
+def calculate_biomass(height, density):
+    """
+    Calculate forest biomass using allometric equations
+    """
+    return model.estimate(height, density)
+```
+
+### Policy Support
+- Carbon credit validation
+- Forest management planning
+- Conservation assessment
+- International reporting
+
+## Future Directions
+
+### Short-term Goals (1-2 years)
+- [ ] Enhanced resolution products
+- [ ] Improved uncertainty estimates
+- [ ] New validation methods
+- [ ] Extended coverage areas
+
+### Long-term Vision (3-5 years)
+- [ ] Global forest monitoring
+- [ ] Real-time change detection
+- [ ] Advanced ML integration
+- [ ] Enhanced prediction models
+
+## Get Involved
+
+### For Scientists
+- Access our datasets
+- Contribute algorithms
+- Validate results
+- Collaborate on research
+
+### For Developers
+- Contribute to codebase
+- Improve documentation
+- Develop new features
+- Fix bugs
+
+### For Users
+- Download products
+- Provide feedback
+- Share use cases
+- Join community
 
 ## Resources
 
 ### Documentation
-- [GitHub Repository](https://github.com/hysds)
-- [Community Wiki](https://hysds-core.atlassian.net/wiki/spaces/HYS/overview)
-- [Issue Tracker](https://hysds-core.atlassian.net/jira/software/c/projects/HC/issues)
+- [Technical Guides](docs/technical/)
+- [API Reference](docs/api/)
+- [User Manuals](docs/users/)
+- [Tutorials](docs/tutorials/)
 
 ### Community
-- [Slack Channels](https://hysds.slack.com)
-- [Contributing Guide](../contribute)
-- [Getting Started](../guides/getting-started)
+- [GitHub Repository](https://github.com/nasa/icesat2_boreal)
+- [Discussion Forum](https://github.com/nasa/icesat2_boreal/discussions)
+- [Slack Channel](https://icesat2-boreal.slack.com)
+- [Mailing List](mailto:icesat2-boreal@lists.nasa.gov)
 
-## Recognition
+## Publications
 
-HySDS has received recognition for its contributions to Earth Science data processing and has been successfully adopted by numerous NASA projects. The system's innovations in hybrid cloud processing and scaling capabilities have set new standards in the field.
+### Key Papers
+1. "Global Patterns of Boreal Forest Biomass"
+2. "ICESat-2 Forest Measurement Validation"
+3. "Machine Learning in Forest Remote Sensing"
+
+### Conference Presentations
+- AGU Fall Meeting 2024
+- ForestSAT 2024
+- ESA Living Planet Symposium 2024
 
 ## Contact
 
-- GitHub: [HySDS Organization](https://github.com/hysds)
-- Slack: [HySDS Community](https://hysds.slack.com)
-- Wiki: [Documentation](https://hysds-core.atlassian.net/)
+### General Inquiries
+- Email: info@icesat2-boreal.org
+- Phone: +1 (xxx) xxx-xxxx
+- Address: [Institution Address]
+
+### Technical Support
+- Support: support@icesat2-boreal.org
+- Documentation: docs@icesat2-boreal.org
+- Development: dev@icesat2-boreal.org
 
 ---
 
-*Copyright 2024, by the California Institute of Technology. ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.*
+*Last Updated: November 2024*
+
+[Website](https://icesat2-boreal.org) | [GitHub](https://github.com/nasa/icesat2_boreal) | [Documentation](https://docs.icesat2-boreal.org)

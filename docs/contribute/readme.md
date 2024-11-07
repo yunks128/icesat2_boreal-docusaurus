@@ -1,224 +1,258 @@
----
-sidebar_position: 2
----
+# Contributing to ICESat-2 Boreal Project
 
-# Contributing to HySDS
+First off, thank you for considering contributing to the ICESat-2 Boreal Forest Biomass Mapping project! This project thrives because of our community's contributions.
 
-Thank you for your interest in contributing to HySDS! This guide will help you get started with contributing to the project.
+## 📋 Table of Contents
 
-## Community Overview
+- [Contributing to ICESat-2 Boreal Project](#contributing-to-icesat-2-boreal-project)
+  - [📋 Table of Contents](#-table-of-contents)
+  - [🤝 Code of Conduct](#-code-of-conduct)
+  - [🚀 Getting Started](#-getting-started)
+  - [💻 Development Process](#-development-process)
+    - [Local Development](#local-development)
+    - [Git Workflow](#git-workflow)
+  - [📥 Pull Request Process](#-pull-request-process)
+  - [📝 Style Guides](#-style-guides)
+    - [Python Style Guide](#python-style-guide)
+    - [Documentation Style](#documentation-style)
+  - [🧪 Testing Guidelines](#-testing-guidelines)
+  - [📚 Documentation](#-documentation)
+    - [Required Documentation](#required-documentation)
+    - [API Documentation Example](#api-documentation-example)
+  - [🏷️ Issue Labels](#️-issue-labels)
+  - [📊 Versioning](#-versioning)
+  - [🎉 Recognition](#-recognition)
+  - [❓Getting Help](#getting-help)
 
-HySDS is a community-driven project with:
-- 50+ active developers and integrators
-- 78+ repositories in the organization
-- 83+ releases
-- 30+ contributors to the core platform
+## 🤝 Code of Conduct
 
-## Ways to Contribute
+By participating in this project, you agree to abide by our [Code of Conduct](CODE_OF_CONDUCT.md). Please read it before contributing.
 
-### 1. Code Contributions
-- Bug fixes
-- New features
-- Performance improvements
-- Documentation updates
+## 🚀 Getting Started
 
-### 2. Non-Code Contributions
-- Documentation improvements
-- Bug reports
-- Feature requests
-- Use case examples
-- Community support
+1. **Fork the Repository**
+   ```bash
+   git clone https://github.com/your-username/icesat2_boreal.git
+   cd icesat2_boreal
+   ```
 
-## Getting Started
+2. **Set Up Development Environment**
+   ```bash
+   # Create virtual environment
+   python -m venv venv
+   source venv/bin/activate  # Unix
+   # or
+   .\venv\Scripts\activate  # Windows
 
-### Setting Up Development Environment
+   # Install dependencies
+   pip install -r requirements-dev.txt
+   
+   # Install pre-commit hooks
+   pre-commit install
+   ```
 
-```bash
-# Fork and clone the repository
-git clone https://github.com/your-username/hysds.git
-cd hysds
+3. **Create a Feature Branch**
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
 
-# Create virtual environment
-python3 -m venv venv
-source venv/bin/activate
+## 💻 Development Process
 
-# Install dependencies
-pip install -r requirements.txt
-pip install -r requirements-dev.txt
+### Local Development
 
-# Set up pre-commit hooks
-pre-commit install
-```
+1. **Environment Setup**
+   - Use Python 3.8 or higher
+   - Install required packages: `pip install -r requirements-dev.txt`
+   - Configure your IDE to use project's `.editorconfig`
 
-## Development Workflow
+2. **Code Quality Tools**
+   ```bash
+   # Run linter
+   flake8 .
 
-1. **Create a Branch**
-```bash
-# Create a branch for your work
-git checkout -b feature/your-feature-name
-```
+   # Run type checker
+   mypy .
 
-2. **Make Changes**
-- Write code following our style guide
-- Add tests for new functionality
-- Update documentation as needed
+   # Format code
+   black .
+   ```
 
-3. **Commit Changes**
-```bash
-# Stage and commit your changes
-git add .
-git commit -m "feat: describe your changes"
-```
+3. **Running Tests**
+   ```bash
+   # Run all tests
+   pytest
 
-4. **Push Changes**
-```bash
-git push origin feature/your-feature-name
-```
+   # Run with coverage
+   pytest --cov=src tests/
+   ```
 
-## Coding Standards
+### Git Workflow
 
-### Python Style Guide
-- Follow PEP 8 guidelines
-- Use meaningful variable names
-- Add type hints for Python 3.8+
-- Include docstrings for classes and functions
+1. **Keep Your Fork Updated**
+   ```bash
+   git remote add upstream https://github.com/nasa/icesat2_boreal.git
+   git fetch upstream
+   git merge upstream/main
+   ```
 
-### Example:
-```python
-from typing import List, Optional
+2. **Commit Messages**
+   ```
+   type(scope): description
 
-def process_data(input_file: str, options: Optional[dict] = None) -> List[str]:
-    """
-    Process input data according to specified options.
-    
-    Args:
-        input_file: Path to input file
-        options: Optional processing parameters
-        
-    Returns:
-        List of processed data strings
-    """
-    # Implementation
-    pass
-```
+   [optional body]
 
-## Testing
+   [optional footer]
+   ```
+   Types: feat, fix, docs, style, refactor, test, chore
 
-### Running Tests
-```bash
-# Run all tests
-pytest
-
-# Run specific test file
-pytest tests/test_specific.py
-
-# Run with coverage
-pytest --cov=hysds tests/
-```
-
-### Writing Tests
-```python
-# test_example.py
-import pytest
-from hysds.your_module import YourClass
-
-def test_your_feature():
-    instance = YourClass()
-    result = instance.your_method()
-    assert result == expected_value
-```
-
-## Documentation
-
-### Writing Documentation
-- Use clear, concise language
-- Include code examples
-- Add diagrams where helpful
-- Update relevant README files
-
-### Building Documentation
-```bash
-# Install documentation dependencies
-pip install -r docs/requirements.txt
-
-# Build documentation
-cd docs
-make html
-```
-
-## Pull Request Process
+## 📥 Pull Request Process
 
 1. **Before Submitting**
-   - Ensure all tests pass
    - Update documentation
-   - Add changelog entry
-   - Follow commit message conventions
+   - Add/update tests
+   - Run quality checks
+   - Update CHANGELOG.md
 
-2. **Submitting PR**
-   - Create detailed PR description
-   - Link related issues
-   - Request appropriate reviewers
+2. **PR Template**
+   ```markdown
+   ## Description
+   Brief description of changes
+
+   ## Type of Change
+   - [ ] Bug fix
+   - [ ] New feature
+   - [ ] Documentation update
+   - [ ] Performance improvement
+
+   ## Testing
+   Describe testing done
+
+   ## Related Issues
+   Fixes #issue_number
+   ```
 
 3. **Review Process**
-   - Address reviewer comments
-   - Make requested changes
-   - Keep PR updated with main branch
+   - Two approvals required
+   - All CI checks must pass
+   - Documentation updated
+   - Tests added/updated
 
-## Community Channels
+## 📝 Style Guides
 
-### Getting Help
-- [GitHub Issues](https://github.com/hysds/hysds/issues)
-- [Slack Channels](https://hysds.slack.com)
-  - #hysds-community
-  - #hysds-developers
-  - #hysds-general
-- [Community Wiki](https://hysds-core.atlassian.net/)
+### Python Style Guide
+- Follow PEP 8
+- Use type hints
+- Maximum line length: 88 characters (Black default)
+- Docstring format: Google style
 
-### Regular Meetings
-- Bi-weekly multi-mission coordination meetings
-- Community development discussions
-- Feature planning sessions
+```python
+def process_data(input_data: np.ndarray) -> Dict[str, float]:
+    """Process input data and return analysis results.
 
-## Issue Reporting
+    Args:
+        input_data: Array containing raw measurements.
 
-### Bug Reports
-- Use the bug report template
-- Include system information
-- Provide reproducible examples
-- Attach relevant logs
+    Returns:
+        Dictionary containing processed results.
 
-### Feature Requests
-- Use the feature request template
-- Describe the problem solved
-- Provide use cases
-- Suggest implementation details
+    Raises:
+        ValueError: If input_data is empty.
+    """
+```
 
-## Recognition
+### Documentation Style
+- Clear and concise
+- Include examples
+- Update API documentation
+- Keep README.md current
 
-We recognize contributions through:
-- Attribution in release notes
-- Documentation credits
-- Community acknowledgments
-- Project statistics
+## 🧪 Testing Guidelines
 
-## Code of Conduct
+1. **Test Structure**
+   ```python
+   def test_function_name():
+       # Arrange
+       test_input = ...
 
-We maintain a welcoming, inclusive community:
-- Be respectful and professional
-- Value diverse perspectives
-- Follow project guidelines
-- Help others learn and grow
+       # Act
+       result = function_to_test(test_input)
 
-## Additional Resources
+       # Assert
+       assert result == expected_output
+   ```
 
-- [Development Guide](../guides/development)
-- [API Documentation](../api)
-- [Architecture Overview](../guides/architecture)
-- [Example Projects](../examples)
+2. **Test Coverage**
+   - Minimum 80% coverage required
+   - Cover edge cases
+   - Include integration tests
+   - Mock external services
+
+## 📚 Documentation
+
+### Required Documentation
+- Function/class docstrings
+- Module documentation
+- Example usage
+- Architecture diagrams
+- API documentation
+
+### API Documentation Example
+```python
+@api.route('/biomass', methods=['POST'])
+def calculate_biomass():
+    """Calculate forest biomass from input parameters.
+
+    Request Body:
+        {
+            "latitude": float,
+            "longitude": float,
+            "date": string (YYYY-MM-DD)
+        }
+
+    Returns:
+        {
+            "biomass": float,
+            "uncertainty": float,
+            "unit": "Mg/ha"
+        }
+    """
+```
+
+## 🏷️ Issue Labels
+
+- `bug`: Something isn't working
+- `enhancement`: New feature requests
+- `documentation`: Documentation updates
+- `good first issue`: Good for newcomers
+- `help wanted`: Extra attention needed
+- `performance`: Performance improvements
+- `testing`: Testing related
+- `wontfix`: This won't be worked on
+- `priority`: Urgent issues
+
+## 📊 Versioning
+
+We use [Semantic Versioning](https://semver.org/):
+- MAJOR version for incompatible API changes
+- MINOR version for new functionality
+- PATCH version for bug fixes
+
+## 🎉 Recognition
+
+All contributors will be:
+- Listed in CONTRIBUTORS.md
+- Acknowledged in release notes
+- Added to paper authorships when applicable
+
+## ❓Getting Help
+
+- Join our [Slack channel](https://icesat2-boreal.slack.com)
+- Ask in GitHub Discussions
+- Email the maintainers
+- Check the [FAQ](docs/faq.md)
 
 ---
 
-Questions? Reach out to us:
-- GitHub: [HySDS Issues](https://github.com/hysds/hysds/issues)
-- Slack: [HySDS Community](https://hysds.slack.com)
-- Email: [support@hysds.org](mailto:support@hysds.org)
+Remember: The best way to ensure your contribution is accepted is to follow these guidelines and engage with the community. When in doubt, ask!
+
+*Last Updated: November 2024*

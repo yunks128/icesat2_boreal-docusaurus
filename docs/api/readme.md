@@ -2,6 +2,8 @@
 id: api reference
 sidebar_label: API Reference
 title: API Reference
+# Most explicit way to hide from sidebar
+sidebar_class_name: hidden
 ---
 
 ## lib/extract_filter_atl08.py

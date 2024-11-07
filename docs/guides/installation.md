@@ -1,247 +1,310 @@
----
-sidebar_position: 3
----
-
 # Installation Guide
 
-This guide walks you through the process of installing and configuring HySDS for different deployment scenarios.
+This guide provides detailed instructions for installing and setting up the ICESat-2 Boreal Forest Biomass Mapping project.
 
-## Prerequisites
+## Table of Contents
+- [System Requirements](#system-requirements)
+- [Installation Methods](#installation-methods)
+- [Dependencies](#dependencies)
+- [Environment Setup](#environment-setup)
+- [Verification](#verification)
+- [Troubleshooting](#troubleshooting)
 
-### System Requirements
-- Operating System: Linux (Ubuntu 20.04 LTS recommended) or macOS
-- Python 3.8 or higher
-- Docker 20.10 or higher
-- Minimum 16GB RAM
-- 50GB available disk space
+## System Requirements
 
-### Required Software
-```bash
-# Python and pip
-python3 --version  # Should be 3.8 or higher
-pip3 --version
+### Minimum Requirements
+```
+Hardware:
+- CPU: 4 cores
+- RAM: 8GB
+- Storage: 50GB free space
+- Internet: Stable connection
 
-# Docker
-docker --version
-docker-compose --version
+Software:
+- Python 3.8+
+- Git
+- GDAL 3.0+
 ```
 
-### Cloud Platform Access (Optional)
-- AWS credentials (for AWS deployment)
-- NASA HECC access (for HECC deployment)
-- On-premise cluster access
+### Recommended Specifications
+```
+Hardware:
+- CPU: 8+ cores
+- RAM: 16GB+
+- Storage: 200GB+ SSD
+- GPU: NVIDIA with 8GB+ VRAM (for ML workflows)
+
+Software:
+- Python 3.10+
+- Docker
+- AWS CLI
+- CUDA 11.0+ (for GPU support)
+```
 
 ## Installation Methods
 
-### 1. Docker-based Installation (Recommended)
-
-```bash
-# Clone the repository
-git clone https://github.com/hysds/hysds.git
-cd hysds
-
-# Build base images
-docker-compose build
-
-# Start core services
-docker-compose up -d mozart grq metrics redis elasticsearch
-```
-
-### 2. Python Package Installation
-
+### 1. pip Installation (Recommended)
 ```bash
 # Create virtual environment
-python3 -m venv hysds-env
-source hysds-env/bin/activate
+python -m venv venv
 
-# Install HySDS
-pip install hysds
+# Activate virtual environment
+# On Unix/macOS:
+source venv/bin/activate
+# On Windows:
+.\venv\Scripts\activate
 
-# Install additional requirements
-pip install -r requirements.txt
+# Install package
+pip install icesat2-boreal
 ```
 
-## Component Setup
-
-### 1. Core Components
-
-#### Mozart Setup
+### 2. Docker Installation
 ```bash
-# Configure Mozart
-cat << EOF > mozart_config.yml
-MOZART_ES_URL: http://localhost:9200
-MOZART_REDIS_URL: redis://localhost:6379
-RABBITMQ_URL: amqp://localhost:5672
-EOF
+# Pull the image
+docker pull nasa/icesat2-boreal:latest
 
-# Initialize Mozart
-hysds-mozart init -c mozart_config.yml
+# Run container
+docker run -d \
+    --name icesat2-boreal \
+    -p 8000:8000 \
+    -v ${PWD}/data:/app/data \
+    nasa/icesat2-boreal:latest
 ```
 
-#### GRQ Setup
+### 3. Source Installation
 ```bash
-# Configure GRQ
-cat << EOF > grq_config.yml
-GRQ_ES_URL: http://localhost:9200
-GRQ_DB_URL: sqlite:///grq_db.sqlite3
-EOF
+# Clone repository
+git clone https://github.com/nasa/icesat2_boreal.git
+cd icesat2_boreal
 
-# Initialize GRQ
-hysds-grq init -c grq_config.yml
+# Create and activate virtual environment
+python -m venv venv
+source venv/bin/activate
+
+# Install in development mode
+pip install -e ".[dev]"
 ```
 
-#### Metrics Setup
+## Dependencies
+
+### Core Dependencies
+```txt
+# requirements.txt
+numpy>=1.20.0
+pandas>=1.3.0
+xarray>=0.19.0
+geopandas>=0.10.0
+rasterio>=1.2.0
+scikit-learn>=1.0.0
+torch>=1.9.0
+gdal>=3.0.0
+```
+
+### Development Dependencies
+```txt
+# requirements-dev.txt
+pytest>=6.0.0
+black>=21.0.0
+flake8>=3.9.0
+mypy>=0.910
+sphinx>=4.0.0
+pre-commit>=2.15.0
+```
+
+### Optional Dependencies
+```txt
+# requirements-optional.txt
+jupyterlab>=3.0.0
+tensorflow>=2.6.0
+dask>=2021.9.0
+h5py>=3.0.0
+```
+
+## Environment Setup
+
+### 1. System Dependencies
+
+#### Ubuntu/Debian
 ```bash
-# Configure Metrics
-cat << EOF > metrics_config.yml
-METRICS_ES_URL: http://localhost:9200
-EOF
+# Update package list
+sudo apt update
 
-# Initialize Metrics
-hysds-metrics init -c metrics_config.yml
+# Install system dependencies
+sudo apt install -y \
+    python3-dev \
+    python3-pip \
+    gdal-bin \
+    libgdal-dev \
+    gcc \
+    g++ \
+    make
 ```
 
-### 2. Worker Configuration
-
+#### macOS
 ```bash
-# Configure Verdi worker
-cat << EOF > worker_config.yml
-MOZART_URL: http://localhost:8888
-GRQ_URL: http://localhost:8878
-WORK_DIR: /data/work
-DOCKER_REGISTRY: registry.example.com
-EOF
-
-# Initialize worker
-hysds-verdi init -c worker_config.yml
+# Using Homebrew
+brew update
+brew install \
+    python@3.10 \
+    gdal \
+    gcc
 ```
 
-## Deployment Configurations
-
-### 1. Single-Node Development Setup
-
-```yaml
-# docker-compose.dev.yml
-version: '3'
-services:
-  mozart:
-    image: hysds/mozart
-    ports:
-      - "8888:8888"
-    environment:
-      - ELASTICSEARCH_URL=http://elasticsearch:9200
-      
-  grq:
-    image: hysds/grq
-    ports:
-      - "8878:8878"
-    environment:
-      - ELASTICSEARCH_URL=http://elasticsearch:9200
+#### Windows
+```powershell
+# Using Chocolatey
+choco install -y `
+    python3 `
+    gdal `
+    visualstudio2019buildtools
 ```
 
-### 2. Production Cluster Setup
+### 2. Environment Variables
 
-```yaml
-# docker-compose.prod.yml
-version: '3'
-services:
-  mozart:
-    image: hysds/mozart
-    deploy:
-      replicas: 2
-    environment:
-      - ELASTICSEARCH_URL=http://elasticsearch:9200
-      
-  grq:
-    image: hysds/grq
-    deploy:
-      replicas: 2
-    environment:
-      - ELASTICSEARCH_URL=http://elasticsearch:9200
-```
-
-### 3. Hybrid Cloud Setup
-
-```yaml
-# hybrid-config.yml
-aws:
-  region: us-west-2
-  vpc_id: vpc-xxxxxxxx
-  subnet_ids:
-    - subnet-xxxxxxxx
-    - subnet-yyyyyyyy
-
-on_premise:
-  network: 192.168.1.0/24
-  storage_path: /data/hysds
-```
-
-## Post-Installation Steps
-
-### 1. Verify Installation
+Create `.env` file:
 ```bash
-# Check service status
-hysds-admin status
-
-# Test components
-hysds-admin test mozart
-hysds-admin test grq
-hysds-admin test metrics
+# .env
+EARTHDATA_USERNAME=your_username
+EARTHDATA_PASSWORD=your_password
+MAAP_API_KEY=your_api_key
+AWS_ACCESS_KEY_ID=your_aws_key
+AWS_SECRET_ACCESS_KEY=your_aws_secret
+PYTHONPATH=${PYTHONPATH}:/path/to/icesat2_boreal
 ```
 
-### 2. Security Configuration
+### 3. GDAL Configuration
 ```bash
-# Generate SSL certificates
-hysds-admin ssl generate
-
-# Configure authentication
-hysds-admin auth setup
+# Set GDAL environment variables
+export GDAL_DATA=/usr/share/gdal
+export PROJ_LIB=/usr/share/proj
 ```
 
-### 3. Initial Data Setup
-```bash
-# Initialize datasets
-hysds-admin data init
+## Verification
 
-# Test data ingestion
-hysds-admin ingest test-data.h5
+### 1. Test Installation
+```python
+# test_installation.py
+from icesat2_boreal import __version__
+from icesat2_boreal.core import BiomassProcessor
+
+def test_import():
+    assert __version__ == "1.0.0"
+    
+def test_processor():
+    processor = BiomassProcessor()
+    assert processor is not None
 ```
 
-## Common Issues and Solutions
-
-### Elasticsearch Connection Issues
+### 2. Run Verification Script
 ```bash
-# Check Elasticsearch status
-curl -X GET "localhost:9200/_cluster/health"
+# Run tests
+pytest tests/
 
-# Reset Elasticsearch indexes
-hysds-admin es reset
+# Run sample processing
+python scripts/verify_installation.py
 ```
 
-### Worker Connection Problems
-```bash
-# Check worker connectivity
-hysds-admin worker test-connection
+### 3. Check GPU Support
+```python
+import torch
 
-# Reset worker configuration
-hysds-admin worker reset
+def check_gpu():
+    if torch.cuda.is_available():
+        print(f"GPU available: {torch.cuda.get_device_name(0)}")
+        print(f"CUDA version: {torch.version.cuda}")
+    else:
+        print("No GPU available. Using CPU only.")
+```
+
+## Troubleshooting
+
+### Common Issues
+
+#### 1. GDAL Installation Issues
+```bash
+# If GDAL installation fails
+conda install -c conda-forge gdal
+
+# Or use OSGeo4W on Windows
+# Download and run OSGeo4W installer
+```
+
+#### 2. Memory Issues
+```python
+# Configure memory limits
+import os
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'  # Limit to first GPU
+os.environ['RASTERIO_CACHE_SIZE'] = '512'  # MB
+```
+
+#### 3. Dependency Conflicts
+```bash
+# Create clean environment
+conda create -n icesat2_boreal python=3.10
+conda activate icesat2_boreal
+
+# Install dependencies
+conda install -c conda-forge --file requirements.txt
+```
+
+### Installation Logs
+
+Keep installation logs for troubleshooting:
+```bash
+# Redirect installation output to log
+pip install icesat2-boreal -v > install_log.txt 2>&1
+```
+
+### Validation Script
+```python
+def validate_installation():
+    """Validate installation and dependencies."""
+    import sys
+    import pkg_resources
+    
+    required = {'numpy', 'pandas', 'gdal', 'torch'}
+    installed = {pkg.key for pkg in pkg_resources.working_set}
+    missing = required - installed
+    
+    if missing:
+        print(f"Missing packages: {missing}")
+        sys.exit(1)
+    
+    print("Installation validated successfully!")
+```
+
+## Uninstallation
+
+### Clean Uninstall
+```bash
+# Remove package
+pip uninstall icesat2-boreal
+
+# Remove virtual environment
+deactivate
+rm -rf venv
+
+# Remove Docker containers and images
+docker stop icesat2-boreal
+docker rm icesat2-boreal
+docker rmi nasa/icesat2-boreal:latest
 ```
 
 ## Next Steps
 
 After installation:
-1. Complete the [Getting Started Guide](../getting-started)
-2. Review [Security Best Practices](../security)
-3. Set up your first [Processing Job](../tutorials#setting-up-your-first-processing-job)
-4. Configure [Auto-scaling](../configuration/auto-scaling)
+1. Follow the [Getting Started Guide](getting-started.md)
+2. Review [Configuration Options](configuration.md)
+3. Explore [Example Notebooks](../notebooks/)
+4. Join the [Community](community.md)
 
-## Additional Resources
+## Support
 
-- [Configuration Reference](../configuration)
-- [API Documentation](../api)
-- [Troubleshooting Guide](../troubleshooting)
-- [Community Support](https://hysds-core.atlassian.net/)
+If you encounter issues:
+1. Check [Known Issues](https://github.com/nasa/icesat2_boreal/issues)
+2. Search [Discussions](https://github.com/nasa/icesat2_boreal/discussions)
+3. Contact support: support@icesat2-boreal.org
 
 ---
 
-For more detailed information about specific deployment scenarios or advanced configuration options, please refer to our [documentation](https://hysds-core.atlassian.net/wiki/spaces/HYS/overview).
+*For detailed API documentation, visit [docs.icesat2-boreal.org](https://docs.icesat2-boreal.org)*

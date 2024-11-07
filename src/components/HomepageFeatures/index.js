@@ -4,32 +4,30 @@ import styles from './styles.module.css';
 
 const FeatureList = [
   {
-    title: 'Easy to Use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    title: 'Precision Mapping',
+    Svg: require('@site/static/img/precision-mapping.svg').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Advanced satellite technology combining ICESat-2/ATLAS data with Landsat/Sentinel-2 imagery for unprecedented accuracy in forest biomass mapping
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    title: 'Boreal Forest Focus',
+    Svg: require('@site/static/img/boreal-forest.svg').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        Specialized analysis of the circumpolar boreal region, providing crucial insights into one of Earth's largest carbon sinks
       </>
     ),
   },
   {
-    title: 'Powered by React',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    title: 'Data Integration',
+    Svg: require('@site/static/img/data-integration.svg').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Seamless fusion of multiple data sources including high-resolution elevation data from Copernicus GLO30 DEM
+
       </>
     ),
   },

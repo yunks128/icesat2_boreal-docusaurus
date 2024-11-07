@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Sky Background -->
+  <rect width="200" height="200" fill="#f0f9ff"/>
+  
+  <!-- Mountains -->
+  <path d="M 0 140 L 60 80 L 120 140" fill="#9ca3af"/>
+  <path d="M 80 140 L 140 70 L 200 140" fill="#6b7280"/>
+  
+  <!-- Trees -->
+  <g id="pine-tree">
+    <rect x="30" y="140" width="8" height="20" fill="#4b5563"/>
+    <path d="M 34 90 L 50 130 L 18 130 Z" fill="#34d399"/>
+    <path d="M 34 110 L 45 140 L 23 140 Z" fill="#34d399"/>
+  </g>
+  
+  <!-- Copy trees across the landscape -->
+  <use href="#pine-tree" x="40"/>
+  <use href="#pine-tree" x="80"/>
+  <use href="#pine-tree" x="120"/>
+  <use href="#pine-tree" x="-20" y="10"/>
+  <use href="#pine-tree" x="60" y="10"/>
+  <use href="#pine-tree" x="100" y="10"/>
+</svg>

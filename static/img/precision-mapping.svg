@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Background Grid -->
+  <defs>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#f0f0f0" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="200" height="200" fill="url(#grid)"/>
+  
+  <!-- Satellite -->
+  <path d="M 100 40 L 120 60 L 80 60 Z" fill="#4299e1"/>
+  <rect x="90" y="60" width="20" height="30" fill="#4299e1"/>
+  
+  <!-- Solar Panels -->
+  <rect x="50" y="70" width="30" height="10" fill="#90cdf4"/>
+  <rect x="120" y="70" width="30" height="10" fill="#90cdf4"/>
+  
+  <!-- Earth Surface -->
+  <path d="M 20 140 C 50 120, 150 120, 180 140 S 150 160, 20 140" fill="#48bb78"/>
+  
+  <!-- Satellite Beams -->
+  <line x1="100" y1="90" x2="70" y2="140" stroke="#4299e1" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="100" y1="90" x2="130" y2="140" stroke="#4299e1" stroke-width="2" stroke-dasharray="5,5"/>
+</svg>
